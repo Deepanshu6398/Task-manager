@@ -1,13 +1,5 @@
 # Fault-Tolerant Data Processing System
 
-Run locally:
-
-```bash
-npm start
-```
-
-Open `http://localhost:3000`.
-
 ## What assumptions did you make?
 
 - This is a single-process prototype, so the datastore is a JSON file at `data/events.json`. The code models the storage boundary with atomic file replacement and a write queue; in production this would be a database transaction with a unique idempotency key.
@@ -34,3 +26,8 @@ The prototype avoids separate "write event then update counter" state because th
 - Fingerprint-based dedupe without a client event ID can undercount legitimate identical events. At higher volume, clients should be required to send stable idempotency keys or the system should issue ingestion tokens.
 - Aggregates are calculated on read from processed events. That is consistent and simple, but slow for large history. I would add materialized aggregate tables updated transactionally or rebuilt by a background job.
 - Normalization rules are currently code config. As formats evolve, they should become versioned schema/mapping records so old raw events remain reprocessable and queryable under the rules that applied when they arrived.
+
+# For live demo:
+
+Open: https://fault-tolerant-data-processing-syst-ashy.vercel.app/
+
